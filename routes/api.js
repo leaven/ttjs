@@ -15,8 +15,13 @@ router.get('/', function(req, res, next) {
 				value: $selectors[i].children[0].data
 			});
 		}
+		 res.json({
+		 	errno: 0,
+		 	data: contents
+		 });
+		// console.log(contents);
 	})
- 	 res.render('index', { title: 'Express' });
+ 	 // res.render('index', { title: 'Express' });
 });
 
 module.exports = router;
