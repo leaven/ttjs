@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "DEBUG=ttjs:* node ./bin/www",
+    "dev": "DEBUG=ttjs:* supervisor ./bin/www",
     "win-dev": "set DEBUG=ttjs: * & supervisor ./bin/www"
   },
   "dependencies": {
@@ -19,5 +19,8 @@
     "request": "^2.69.0",
     "serve-favicon": "~2.3.0",
     "swig": "^1.4.2"
+  },
+  "devDependencies": {
+    "mysql": "^2.10.2"
   }
 }
