@@ -20,7 +20,8 @@ router.get('/', function(req, res, next) {
 		 // 	errno: 0,
 		 // 	data: contents
 		 // });
-		 blogDao.add(req, res, next, contents);
+		//blogDao.add(req, res, next, contents);
+		blogDao.select(req, res, next); 
 		// console.log(contents);
 	})
  	 // res.render('index', { title: 'Express' });

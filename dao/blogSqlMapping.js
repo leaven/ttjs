@@ -1,7 +1,7 @@
 // dao/blogSqlMapping.js
 // CRUD SQL语句
 var blog = {
-	insert:'INSERT INTO blog(id, url, title) VALUES(0,?,?)',
+	insert:'insert into blog(url, title) values ?',
 	update:'update blog set url=?, title=? where id=?',
 	delete: 'delete from blog where id=?',
 	queryById: 'select * from blog where id=?',

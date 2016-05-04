@@ -23,10 +23,10 @@ var jsonWrite = function (res, ret,err) {
 module.exports = {
 	add: function (req, res, next, data) {
 		pool.getConnection(function(err, connection) {
- 		console.log(data);
 			// 建立连接，向表中插入值
-			// 'INSERT INTO user(id, name, age) VALUES(0,?,?)',
+			// 'INSERT INTO blog(id, url, title) VALUES(0,?,?)',
 			connection.query($sql.insert, [data], function(err, result) {
+
 				if(result) {
 					result = {
 						code: 200,
@@ -41,6 +41,26 @@ module.exports = {
 				// 释放连接 
 				connection.release();
 			});
+		});
+	},
+	select: function (req, res, next) {
+		pool.getConnection(function(err, connection) {
+			connection.query($sql.queryAll, function (err, result) {
+				if(result) {
+					console.log(result);
+					result = {
+						code: 200,
+						msg:'查询成功',
+						content: result
+					};    
+				}
+ 
+				// 以json形式，把操作结果返回给前台页面
+				jsonWrite(res, result,err);
+ 
+				// 释放连接 
+				connection.release();
+			})
 		});
 	}
 };
