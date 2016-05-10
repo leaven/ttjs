@@ -1,9 +1,11 @@
-create table blog(
+create table blogposts(
 	id int primary key auto_increment,
 	title varchar(50) NOT NULL,
-	url varchar(50) NOT NULL,
+	url varchar(100) NOT NULL,
+	brief text  default NULL,
 	post_date date default NULL,
 	tag varchar(50) default NUll,
+	meta varchar(50) default NULL,
 	site varchar(20) default NULL,
-	crawl_time timestamp NOT NULL default CURRENT_TIMESTAMP
+	crawl_time DateTime NOT NULL default CURRENT_TIMESTAMP
 );

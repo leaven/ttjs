@@ -1,8 +1,14 @@
 module.exports = [
 	{
-		js: ['react', 'webpack', 'gulp', 'grunt', 'javascript', 'js', 'anguluar', 'backbone']
+		tag: 'js',
+		regs: ['react',  'javascript', 'js', 'anguluar', 'backbone']
 	},
 	{
-		css: ['less']
+		tag: 'css',
+		regs: ['less', 'sass', 'post']
+	},
+	{
+		tag: '前端工程',
+		regs: ['webpack', 'gulp', 'grunt', 'fis', 'npm', 'bower']
 	}
 ]

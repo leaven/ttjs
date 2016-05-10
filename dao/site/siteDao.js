@@ -1,8 +1,8 @@
 // dao/blogDao.js
 // 实现与MySQL交互
 var mysql = require('mysql');
-var $conf = require('../conf/db.js');
-var $sql = require('./blogSqlMapping');
+var $conf = require('../../conf/db.js');
+var $sql = require('./siteSqlMapping');
 
 // 使用连接池，提升性能
 var pool  = mysql.createPool($conf.mysql);
@@ -24,8 +24,8 @@ module.exports = {
 	add: function (data) {
 		pool.getConnection(function(err, connection) {
 			// 建立连接，向表中插入值
-			// 'INSERT INTO blog(id, url, title) VALUES(0,?,?)',
-			connection.query($sql.insert, [data], function(err, result) {
+			// 'INSERT INTO site(name, url, status) VALUES(?,?,?)',
+			connection.query($sql.insert, data, function(err, result) {
 				if(err) {
 					throw err;
 				}
@@ -49,7 +49,6 @@ module.exports = {
 		pool.getConnection(function(err, connection) {
 			connection.query($sql.queryAll, function (err, result) {
 				if(result) {
-					console.log(result);
 					result = {
 						code: 200,
 						msg:'查询成功',
@@ -64,5 +63,15 @@ module.exports = {
 				connection.release();
 			})
 		});
-	}
+	},
+	selectByUrl: function(url, callback) {
+		pool.getConnection(function(err, connection) {
+			
+			connection.query($sql.queryByUrl, url, function (err, result) {
+				if(err) throw err;
+				callback(null, result)
+				connection.release();
+			})
+		})
+	} 
 };
