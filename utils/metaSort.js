@@ -9,7 +9,7 @@ module.exports = function(title) {
 
 	//对title进行归类
 	tags.forEach(function(v, k) {
-		var reg = new RegExp(v.regs.join('|'),'gi');
+		var reg = new RegExp(v.regs.join('|'),'i');
 		var titleMeta = title.match(reg);
 		
 		if(titleMeta && titleMeta.length) {

@@ -14,6 +14,7 @@ var Index = React.createClass({
         <p>
           I can count to 10:
         </p>
+        <div>{this.props.postItem}</div>
       </Layout>
     );
   }

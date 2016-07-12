@@ -7,4 +7,8 @@ module.exports = [
 		url: 'http://taobaofed.org',
 		site: 'taobaofed'
 	}
+	// {
+	// 	url: 'https://zhuanlan.zhihu.com/FrontendMagazine',
+	// 	site: 'qianduanwaikan'
+	// }
 ]

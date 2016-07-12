@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var blogDao = require('../dao/blogDao.js');
+var blogDao = require('../dao/blogpost/blogDao.js');
 var siteDao = require('../dao/site/siteDao.js');
 
 /* GET home page. */

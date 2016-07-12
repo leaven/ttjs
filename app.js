@@ -2,13 +2,23 @@ var express = require('express');
 var reactViews = require('express-react-views');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+// var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var api = require('./routes/api');
+var log4js = require('log4js');
+
+
+log4js.configure({
+  appenders: [
+    { type: 'console' },
+    { type: 'file', filename: 'logs/access.log', category: 'normal' }
+  ]
+});
+var logger = log4js.getLogger('normal');
 
 var app = express();
 
@@ -19,7 +29,8 @@ app.engine('jsx', reactViews.createEngine());
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+// app.use(logger('dev'));
+app.use(log4js.connectLogger(logger, {level:log4js.levels.INFO}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -61,6 +72,7 @@ app.use(function(err, req, res, next) {
   // });
   res.send(err.message);
 });
+
 
 
 module.exports = app;

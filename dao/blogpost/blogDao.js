@@ -1,7 +1,7 @@
 // dao/blogDao.js
 // 实现与MySQL交互
 var mysql = require('mysql');
-var $conf = require('../conf/db.js');
+var $conf = require('../../conf/db.js');
 var $sql = require('./blogSqlMapping');
 
 // 使用连接池，提升性能
@@ -25,7 +25,7 @@ module.exports = {
 		pool.getConnection(function(err, connection) {
 			// 建立连接，向表中插入值
 			// 'INSERT INTO blog(id, url, title) VALUES(0,?,?)',
-			connection.query($sql.insert, [data], function(err, result) {
+			connection.query($sql.insert, data, function(err, result) {
 				if(err) {
 					throw err;
 				}
@@ -39,7 +39,6 @@ module.exports = {
  				
 				// 以json形式，把操作结果返回给前台页面
 				//jsonWrite(res, result,err);
- 				console.log('success');
 				// 释放连接 
 				connection.release();
 			});
@@ -47,9 +46,18 @@ module.exports = {
 	},
 	select: function (req, res, next) {
 		pool.getConnection(function(err, connection) {
-			connection.query($sql.queryAll, function (err, result) {
+			
+			var page = req.query.page,
+				sql;
+			
+			if(page) {
+				var size = req.query.size || 200;
+				sql = 'select id, title, url, brief from blogposts limit '+ (page-1)*size + ',' + size ;
+			}else {
+				sql = $sql.queryAll;
+			}
+			connection.query(sql, function (err, result) {
 				if(result) {
-					console.log(result);
 					result = {
 						code: 200,
 						msg:'查询成功',
@@ -64,5 +72,16 @@ module.exports = {
 				connection.release();
 			})
 		});
+	},
+	selectByUrl: function(url, callback) {
+		pool.getConnection(function(err, connection) {
+			connection.query($sql.queryByUrl, url, function(err, result) {
+				if(err) {  
+					throw err;
+				}
+				callback(null, result)
+				connection.release();
+			})
+		})
 	}
 };
